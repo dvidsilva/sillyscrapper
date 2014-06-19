@@ -9,8 +9,6 @@ var app = express();
 
 
 
-
-
 /* Error handling */
 app.use(function(err, req, res, next){
     console.error(err.stack);
