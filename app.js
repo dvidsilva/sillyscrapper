@@ -25,10 +25,28 @@ app.get('/', function(req, res){
 });
 
 app.get('/visit', function(req, res){
-	res.json({url: req.query.url });
+    var url = req.query.url;
+    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    if(regexp.test(url) === false ){
+        res.json({error: url + " is not a valid url"  });
+    	return false;
+    }
+    
+    scrapper.visit(url, function(result) {
+    	res.json(result);
+    });
+    
 });
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
     console.log('Listening on port %d', server.address().port);
 });
+
+    
+    
+    
+    
+    function isUrl(s) {
+        return 
+    }
