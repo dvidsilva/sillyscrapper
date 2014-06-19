@@ -3,20 +3,22 @@ var scrapper = {};
 
 var phantom = require('phantom');
 
-phantom.create(function (ph) {
+scrapper.visit  = function (url, cb) {
+  phantom.create(function (ph) {
     ph.createPage(function (page) {
-        page.open("http://www.google.com", function (status) {
-            console.log("opened google? ", status);
-            page.evaluate(function () { return document.title; }, function (result) {
-                console.log('Page title is ' + result);
-                ph.exit();
-            });
+      page.open("http://www.google.com", function (status) {
+        console.log("opened google? ", status);
+        page.evaluate(function () { return document.title; }, function (result) {
+          console.log('Page title is ' + result);
+          ph.exit();
         });
+      });
     });
-});
+  });
+};
 
-scrapper.visit = function(url, cb, err){
-	return cb(url);
-}
 
-exports.scrapper;
+exports.visit = function(url, cb, err){
+	scrapper.visit(url, function(result) { cb(result); } ) ;
+};
+
