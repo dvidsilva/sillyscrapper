@@ -8,21 +8,21 @@ scrapper.visit = function (url, cb) {
     phantom.create(function (ph) {
         ph.createPage(function (page) {
             page.open(url, function(status){
-            	console.log("opened " + url);
+                console.log("opened " + url);
                 page.evaluate(
-                    function () { 
+                    function () {
                         return {
-                            cover: document.querySelector('.img-hero').src,
+                            cover: document.querySelector('meta[property="og:image"]').content,
                             title: document.querySelector('meta[property="og:title"]').content,
                             description: document.querySelector('meta[property="og:description"]').content,
                             source: window.location.href.split( '/' )[0] + "//" + window.location.href.split( '/' )[2]
-                        } ; 
-                    }, 
+                        } ;
+                    },
                     function (result) {
-                    	console.log('Page title is ' + result);
-                    	cb({title: result});
-                    	ph.exit();
-                	}
+                        console.log('Page title is ' + result);
+                        cb({page: result});
+                        ph.exit();
+                        }
                 );
             });
         });
@@ -31,7 +31,7 @@ scrapper.visit = function (url, cb) {
             weak: false
         }
     });
-    
+
 };
 
 
