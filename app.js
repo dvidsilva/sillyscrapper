@@ -1,5 +1,7 @@
 // https://devcenter.heroku.com/articles/getting-started-with-nodejs#visit-your-application
 var express = require('express');
+var logfmt = require("logfmt");
+
 
 var scrapper = require('./scrapper.js');
 
@@ -15,6 +17,7 @@ app.use(function(err, req, res, next){
     res.send(500, 'Something broke!');
 });
 
+app.use(logfmt.requestLogger());
 
 /* Routes */
 app.get('/', function(req, res){
@@ -25,6 +28,7 @@ app.get('/visit', function(req, res){
 	res.json({url: req.query.url });
 });
 
-var server = app.listen(3000, function() {
+var port = process.env.PORT || 3000;
+var server = app.listen(port, function() {
     console.log('Listening on port %d', server.address().port);
 });

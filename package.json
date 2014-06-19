@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.4.3",
     "grunt": "^0.4.5",
+    "logfmt": "^1.1.2",
     "phantom": "^0.6.3",
     "phantomjs": "^1.9.7-9",
     "supervisor": "^0.6.0"
